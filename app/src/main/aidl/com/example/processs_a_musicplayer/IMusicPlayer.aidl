@@ -9,7 +9,10 @@ interface IMusicPlayer {
      * and return values in AIDL.
      */
 
+
     void start();
 
     void stop();
+
+    boolean getPlayerStatus();
 }
