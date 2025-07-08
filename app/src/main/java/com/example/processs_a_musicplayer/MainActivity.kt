@@ -57,23 +57,23 @@ class MainActivity : AppCompatActivity() {
         stopButton = findViewById(R.id.stopButton)
         statusTextView = findViewById(R.id.statusTextView)
 
-        statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing" else "Music player is stopped"
+        statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing..." else "Music player is stopped"
 
         startButton?.setOnClickListener {
             iMusicPlayer?.start()
-            statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing" else "Music player is stopped"
+            statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing..." else "Music player is stopped"
 
         }
         stopButton?.setOnClickListener {
             iMusicPlayer?.stop()
-            statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing" else "Music player is stopped"
+            statusTextView?.text = if (iMusicPlayer?.playerStatus == true) "Music player is playing..." else "Music player is stopped"
         }
     }
 
     override fun onStop() {
         super.onStop()
         Log.d(TAG, "onStop: Service is unbounded from process A")
-        unbindService(serviceConnection)
+      //  unbindService(serviceConnection)
     }
 
 
