@@ -49,7 +49,9 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         val intent = Intent("MyAidlService")
         intent.setPackage("com.example.processs_a_musicplayer")
-        bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+        bindService(intent, serviceConnection, BIND_AUTO_CREATE)
+        val resolveInfo = packageManager.queryIntentServices(intent, 0)
+        Log.d("AppA", "Found services: ${resolveInfo.size}")
 
         Log.d(TAG, "onResume: Requested to bind the service")
 
@@ -72,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        Log.d(TAG, "onStop: Service is unbounded from process A")
+       // Log.d(TAG, "onStop: Service is unbounded from process A")
       //  unbindService(serviceConnection)
     }
 
