@@ -3,6 +3,7 @@ package com.example.processs_a_musicplayer
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
@@ -20,19 +21,30 @@ class MainActivity : AppCompatActivity() {
     var startButton : Button? = null
     var stopButton : Button? = null
     var statusTextView:TextView ? = null
+    private val airplaneModeReceiver = AirPlaneModeBroadcastReceiver()
 
+
+    var callback = object : IClientCallback.Stub() {
+        override fun onMessageReceived(msg: String?) {
+            Log.d(TAG, "onMessageReceived: $msg on process A")
+        }
+    }
     var serviceConnection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             iMusicPlayer = IMusicPlayer.Stub.asInterface(service)
+            iMusicPlayer?.registerCallback(callback)
             Log.d(TAG, "onServiceConnected: Connection successful on Process A")
        }
 
         override fun onServiceDisconnected(name: ComponentName?) {
+            iMusicPlayer?.unregisterCallback(callback)
             iMusicPlayer = null
             Log.d(TAG, "onServiceDisconnected: Connection disconnected on process B")
         }
 
     }
+
+            
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -55,6 +67,9 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "onResume: Requested to bind the service")
 
+        val filter = IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED)
+        registerReceiver(airplaneModeReceiver, filter)
+
         startButton = findViewById(R.id.startButton)
         stopButton = findViewById(R.id.stopButton)
         statusTextView = findViewById(R.id.statusTextView)
@@ -76,6 +91,8 @@ class MainActivity : AppCompatActivity() {
         super.onStop()
        // Log.d(TAG, "onStop: Service is unbounded from process A")
       //  unbindService(serviceConnection)
+      //  iMusicPlayer?.unregisterCallback(callback)
+      //  unregisterReceiver(airplaneModeReceiver)
     }
 
 

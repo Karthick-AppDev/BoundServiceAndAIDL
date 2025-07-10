@@ -1,6 +1,8 @@
 // IMusicPlayer.aidl
 package com.example.processs_a_musicplayer;
 
+import com.example.processs_a_musicplayer.IClientCallback;
+
 // Declare any non-default types here with import statements
 
 interface IMusicPlayer {
@@ -15,4 +17,9 @@ interface IMusicPlayer {
     void stop();
 
     boolean getPlayerStatus();
+
+    /*Need to import mannually IClientCallback package*/
+
+     void registerCallback(IClientCallback callback);
+     void unregisterCallback(IClientCallback callback);
 }

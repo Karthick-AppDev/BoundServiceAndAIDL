@@ -22,7 +22,14 @@
                 <action android:name="MyAidlService" />
             </intent-filter>
         </service>
-
+        <receiver
+            android:name=".AirPlaneModeBroadcastReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.AIRPLANE_MODE" />
+            </intent-filter>
+        </receiver>
         <activity
             android:name=".MainActivity"
             android:exported="true">
