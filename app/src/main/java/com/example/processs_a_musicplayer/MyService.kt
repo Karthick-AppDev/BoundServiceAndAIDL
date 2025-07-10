@@ -26,9 +26,9 @@ class MyService : Service() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == Intent.ACTION_AIRPLANE_MODE_CHANGED) {
                 val isAirplaneModeOn = intent.getBooleanExtra("state", false)
-                Toast.makeText(context, "Airplane Mode: $isAirplaneModeOn", Toast.LENGTH_SHORT).show()
+               // Toast.makeText(context, "Airplane Mode: $isAirplaneModeOn", Toast.LENGTH_SHORT).show()
                 Log.d(TAG, "onReceive: airplane mode broad cast received in service")
-                sendMessageToClient()
+                sendMessageToClient("Airplane Mode: $isAirplaneModeOn")
             }
         }
     }
@@ -44,7 +44,7 @@ class MyService : Service() {
         override fun start() {
             Log.d(TAG, "start: music player")
             isStart = true
-            sendMessageToClient()
+            sendMessageToClient("stop event triggered")
             CoroutineScope(Dispatchers.IO).launch {
                 while (isStart) {
                     Log.d(TAG, "Music player is playing")
@@ -55,7 +55,7 @@ class MyService : Service() {
 
         override fun stop() {
             Log.d(TAG, "stop: music player")
-            sendMessageToClient()
+            sendMessageToClient("stop event triggered")
             isStart = false
         }
 
@@ -80,13 +80,15 @@ class MyService : Service() {
         }
     }
 
-    fun sendMessageToClient(){
+    fun sendMessageToClient(msg: String?){
         for (i in 0 until callbacks.beginBroadcast()){
-            callbacks.getBroadcastItem(i).onMessageReceived("triggered by service")
+            callbacks.getBroadcastItem(i).onMessageReceived(msg ?: "triggered by service")
         }
+
         /*Need to finish broadcast once after in begins broadcast every time
         * Because once the broadcast begins it will be in broadcast state if we trigger
         * another broadcast app crashes because already in broadcast state*/
+
         callbacks.finishBroadcast()
     }
 

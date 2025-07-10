@@ -1,10 +1,9 @@
-package com.example.processs_a_musicplayer
+package com.example.processs_a_musicplayer.broadcastreceiver
 
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
-import android.util.Log
 
 class AirPlaneModeBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -13,10 +12,10 @@ class AirPlaneModeBroadcastReceiver : BroadcastReceiver() {
 
             if (isAirplaneModeOn == true) {
                 // Airplane mode is enabled
-                Log.d("AirplaneMode", "Flight mode turned ON")
+               // Log.d("AirplaneMode", "Flight mode turned ON")
             } else {
                 // Airplane mode is disabled
-                Log.d("AirplaneMode", "Flight mode turned OFF")
+                //Log.d("AirplaneMode", "Flight mode turned OFF")
             }
         }
     }

@@ -23,7 +23,7 @@
             </intent-filter>
         </service>
         <receiver
-            android:name=".AirPlaneModeBroadcastReceiver"
+            android:name=".broadcastreceiver.AirPlaneModeBroadcastReceiver"
             android:enabled="true"
             android:exported="false">
             <intent-filter>
